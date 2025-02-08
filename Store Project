@@ -24,5 +24,24 @@ VALUES
     (13, 'Slow Cooker', 'Appliances', 49.95, 30, 4.7),
     (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
-    
+
+#For this project, I used SQL to query the Superstore database to get information about items sold at the store and their prices/ratings.
+
+-- Ordering prices from highest to lowest
+Select *
+From superstore
+Order by price desc;
+-- Avg price of all items
+Select ROUND(avg(price),2)
+From superstore;
+-- Total price of all items in the Kitchen Supplies category
+SELECT ROUND(SUM(price), 2) 
+From superstore
+Where category = 'Kitchen Supplies';
+-- Show items with quantity over or equal to 50 and the rating is below 4.5.
+Select *
+From superstore
+Where stock_quantity >= 50 and average_rating <= 4.5;
+
+
     
