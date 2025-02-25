@@ -1,0 +1,58 @@
+-- practicing filtering out messy data
+Select *
+From bit_DB.customers
+WHERE length(order_id) = 6
+AND order_id <> 'Order ID';
+-- filter messy data for january
+Select * 
+from BIT_DB.JanSales
+WHERE length(orderid) = 6
+AND orderid <> 'Order ID';
+-- Counting how many orders were for Jan
+Select Count(Distinct orderID)
+From BIT_DB.JanSales
+Where length(orderID) = 6
+And orderID<> 'Order ID';
+-- Counting how many out of those orders were for an iPhone
+Select Count(Distinct orderID)
+From BIT_DB.JanSales
+Where length(orderID) = 6
+And orderID<> 'Order ID'
+AND Product = 'iPhone';
+-- Selecting all account numbers for orders in Feb
+Select distinct acctnum
+From BIT_DB.FebSales
+Inner join BIT_DB.customers
+On BIT_DB.customers.order_id = BIT_DB.FebSales.orderID
+Where Length(orderID) = 6
+and orderID<> 'Order ID';
+-- What was the cheapest item sold in Jan and the price
+Select distinct product, price
+From BIT_DB.JanSales
+WHERE length(orderid) = 6
+and orderid<> 'Order ID'
+ORDER by price asc limit 1;
+-- Revenue for each product sold in Jan
+Select product,sum(quantity)*price as revenue
+From BIT_DB.JanSales
+Where Length(orderID) = 6
+and orderID<> 'Order ID'
+Group by product;
+-- What products sold in feb at a certain location.how many/revenue
+Select product,quantity,sum(quantity)*price as revenue
+From BIT_DB.FebSales
+Where location = '548 Lincoln St, Seattle, WA 98101'
+Group by product;
+-- How many customers bought more than 2 products at a time in February and what was the avg amount spent per customer
+Select 
+count(distinct cust.acctnum),
+avg(quantity*price)
+From BIT_DB.FebSales Feb
+Left join BIT_DB.customers cust
+On Feb.orderID=Cust.order_id
+Where Feb.Quantity>2
+AND length(orderid) = 6
+AND orderid <> 'Order ID';
+
+
+
